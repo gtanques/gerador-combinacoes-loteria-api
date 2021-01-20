@@ -1,8 +1,10 @@
 package com.api.loteria.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,9 +24,9 @@ public class Usuario implements Serializable {
 	private Long id;
 	private String email;
 	
-	@OneToMany	
-	@JoinColumn(name="id")
-	private List<Aposta> apostas;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name="id")	
+	private List<Aposta> apostas = new ArrayList<>();
 
 	public Usuario() {
 

@@ -50,16 +50,7 @@ public class TestConfig implements CommandLineRunner {
 									
 		// Inserir dados 
 		usuarioRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5));
-		apostaRepository.saveAll(Arrays.asList(a1, a2, a3, a4, a5));
-	
-		/*apostaRepository.save(a1);
-		apostaRepository.save(a2);
-		apostaRepository.save(a3);
-		apostaRepository.save(a4);
-		apostaRepository.save(a5);
-		apostaRepository.save(a6);
-		apostaRepository.save(a7);
-		apostaRepository.save(a8);*/	
+		apostaRepository.saveAll(Arrays.asList(a1, a2, a3, a4, a5));			
 		
 	}	
 	

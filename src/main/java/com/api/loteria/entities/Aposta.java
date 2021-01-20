@@ -2,6 +2,7 @@ package com.api.loteria.entities;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,9 +21,8 @@ public class Aposta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String combinacao;
-
-	@ManyToOne
-	@JoinColumn(name = "id_usuario")
+	
+	@ManyToOne(cascade = CascadeType.REFRESH) @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
 	public Aposta() {
@@ -54,6 +54,10 @@ public class Aposta implements Serializable {
 
 	public void setCombinacao(String combinacao) {
 		this.combinacao = combinacao;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
 	public void setUsuario(Usuario usuario) {
