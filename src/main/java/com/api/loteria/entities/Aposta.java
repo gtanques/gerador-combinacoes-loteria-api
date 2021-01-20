@@ -20,9 +20,9 @@ public class Aposta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String combinacao;
-	
+
 	@ManyToOne
-	@JoinColumn(name="id_usuario")
+	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
 	public Aposta() {
@@ -32,6 +32,12 @@ public class Aposta implements Serializable {
 	public Aposta(Long id, String combinacao) {
 		this.id = id;
 		this.combinacao = combinacao;
+	}
+
+	public Aposta(Long id, String combinacao, Usuario usuario) {
+		this.id = id;
+		this.combinacao = combinacao;
+		this.usuario = usuario;
 	}
 
 	public Long getId() {
@@ -48,6 +54,10 @@ public class Aposta implements Serializable {
 
 	public void setCombinacao(String combinacao) {
 		this.combinacao = combinacao;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	@Override
