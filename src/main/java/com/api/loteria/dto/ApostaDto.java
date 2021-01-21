@@ -1,36 +1,23 @@
-package com.api.loteria.entities;
+package com.api.loteria.dto;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.api.loteria.entities.Aposta;
 
-@Entity
-@Table(name = "tb_aposta")
-public class Aposta implements Serializable {
+public class ApostaDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String combinacao;
-		
-	public Aposta() {
+
+	public ApostaDto() {
 
 	}
 
-	public Aposta(Long id, String combinacao) {
-		this.id = id;
-		this.combinacao = combinacao;
-	}
-
-	public Aposta(Long id, String combinacao, Usuario usuario) {
-		this.id = id;
-		this.combinacao = combinacao;		
+	public ApostaDto(Aposta entity) {
+		id = entity.getId();
+		combinacao = entity.getCombinacao();
 	}
 
 	public Long getId() {
@@ -48,7 +35,7 @@ public class Aposta implements Serializable {
 	public void setCombinacao(String combinacao) {
 		this.combinacao = combinacao;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,7 +52,7 @@ public class Aposta implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Aposta other = (Aposta) obj;
+		ApostaDto other = (ApostaDto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -24,8 +24,8 @@ public class Usuario implements Serializable {
 	private Long id;
 	private String email;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name="id")	
+	@OneToMany(targetEntity= Aposta.class, cascade = CascadeType.ALL)
+	@JoinColumn(name = "aposta_usuario_fk", referencedColumnName = "id")	
 	private List<Aposta> apostas = new ArrayList<>();
 
 	public Usuario() {
@@ -85,5 +85,5 @@ public class Usuario implements Serializable {
 			return false;
 		return true;
 	}
-
+	
 }
