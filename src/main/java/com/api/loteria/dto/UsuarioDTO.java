@@ -7,19 +7,19 @@ import java.util.List;
 import com.api.loteria.entities.Aposta;
 import com.api.loteria.entities.Usuario;
 
-public class ApostadorDto implements Serializable{
+public class UsuarioDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Long id;
 	private String email;
 	private List<Aposta> apostas = new ArrayList<>();
 
-	ApostadorDto() {
+	UsuarioDTO() {
 
 	}
 
-	public ApostadorDto(Usuario entity) {		
+	public UsuarioDTO(Usuario entity) {
 		id = entity.getId();
 		email = entity.getEmail();
 		apostas = entity.getApostas();

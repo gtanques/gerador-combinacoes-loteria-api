@@ -4,18 +4,18 @@ import java.io.Serializable;
 
 import com.api.loteria.entities.Aposta;
 
-public class ApostaDto implements Serializable {
+public class ApostaDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private String combinacao;
 
-	public ApostaDto() {
+	public ApostaDTO() {
 
 	}
 
-	public ApostaDto(Aposta entity) {
+	public ApostaDTO(Aposta entity) {
 		id = entity.getId();
 		combinacao = entity.getCombinacao();
 	}
@@ -52,7 +52,7 @@ public class ApostaDto implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ApostaDto other = (ApostaDto) obj;
+		ApostaDTO other = (ApostaDTO) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
