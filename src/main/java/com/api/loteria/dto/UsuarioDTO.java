@@ -15,7 +15,7 @@ public class UsuarioDTO implements Serializable {
 	private String email;
 	private List<Aposta> apostas = new ArrayList<>();
 
-	UsuarioDTO() {
+	public UsuarioDTO() {
 
 	}
 

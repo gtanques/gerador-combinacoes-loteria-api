@@ -11,6 +11,7 @@ import com.api.loteria.entities.Aposta;
 import com.api.loteria.entities.Usuario;
 import com.api.loteria.repositories.ApostaRepository;
 import com.api.loteria.repositories.UsuarioRepository;
+import com.api.loteria.utilities.ApostaUtility;
 
 @Service
 public class UsuarioService {
@@ -20,6 +21,9 @@ public class UsuarioService {
 
 	@Autowired
 	private ApostaRepository apostaRepository;
+	
+	@Autowired
+	private ApostaUtility apostaUtility;
 
 	@Transactional(readOnly = true)
 	public List<Usuario> findAll() {
@@ -27,7 +31,7 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public UsuarioDTO insert(UsuarioDTO usuarioDTO) {
+	public UsuarioDTO insertUsuarioAposta(UsuarioDTO usuarioDTO) {
 		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
 
 		for (Aposta a : usuarioDTO.getApostas()) {
@@ -39,4 +43,19 @@ public class UsuarioService {
 
 		return new UsuarioDTO(usuario);
 	}
+
+	@Transactional
+	public UsuarioDTO insertEmailAposta(String email) {	
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setEmail(email);
+		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
+		Aposta aposta = new Aposta(null, apostaUtility.gerarCombinacao());
+		aposta = apostaRepository.save(aposta);
+		usuario.getApostas().add(aposta);
+
+		usuario = usuarioRepository.save(usuario);
+
+		return new UsuarioDTO(usuario);
+	}
+
 }
