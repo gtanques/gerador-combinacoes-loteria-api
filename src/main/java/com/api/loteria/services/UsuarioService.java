@@ -1,5 +1,6 @@
 package com.api.loteria.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public UsuarioDTO insertEmailAposta(String email) {	
+	public UsuarioDTO insertViaEmail(String email) {	
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail(email);
 		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
@@ -57,5 +58,29 @@ public class UsuarioService {
 
 		return new UsuarioDTO(usuario);
 	}
+	
+	@Transactional
+	public UsuarioDTO insertViaEmailMuitasApostas(String emailUsuario, Integer quantidadeApostas) {	
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+		usuarioDTO.setEmail(emailUsuario);
+		List<Aposta> listaApostas = new ArrayList<Aposta>();
+		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());		
+		int contador = 0;
+		while((contador != quantidadeApostas) && contador < 10){
+			Aposta aposta = new Aposta(null, apostaUtility.gerarCombinacao());
+			listaApostas.add(aposta);
+			contador++;
+		}
+		
+		for(Aposta a : listaApostas) {
+			Aposta aposta = apostaRepository.save(a);
+			usuario.getApostas().add(aposta);
+		}												
+
+		usuario = usuarioRepository.save(usuario);
+
+		return new UsuarioDTO(usuario);
+	}
+
 
 }
