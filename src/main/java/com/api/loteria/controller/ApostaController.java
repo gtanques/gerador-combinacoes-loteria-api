@@ -27,7 +27,7 @@ public class ApostaController {
 		List<Aposta> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-
+	
 	@PostMapping
 	public ResponseEntity<Aposta> insert(@RequestBody Aposta entity) {
 		entity = service.insert(entity);

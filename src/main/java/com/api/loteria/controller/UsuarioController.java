@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.loteria.dto.UsuarioDTO;
-import com.api.loteria.entities.Usuario;
 import com.api.loteria.services.UsuarioService;
 
 @RestController
@@ -25,9 +24,15 @@ public class UsuarioController {
 	private UsuarioService service;
 
 	@GetMapping
-	public ResponseEntity<List<Usuario>> findAll() {
-		List<Usuario> list = service.findAll();
+	public ResponseEntity<List<UsuarioDTO>> findAll() {
+		List<UsuarioDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
+	}
+
+	@GetMapping(value = "/{email}")
+	public ResponseEntity<UsuarioDTO> findEmail(@PathVariable String email) {
+		UsuarioDTO usuario = service.findEmail(email);
+		return ResponseEntity.ok().body(usuario);
 	}
 
 	@PostMapping
@@ -38,14 +43,14 @@ public class UsuarioController {
 	}
 
 	@PostMapping(value = "/{email}")
-	public ResponseEntity<UsuarioDTO> insert(@PathVariable String email) {
+	public ResponseEntity<UsuarioDTO> inserirUsuarioEmailUmaAposta(@PathVariable String email) {
 		UsuarioDTO dto = service.insertViaEmail(email);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
 
 	@PostMapping(value = "/{emailUsuario}/{quantidadeApostas}")
-	public ResponseEntity<UsuarioDTO> insertMuitasApostas(@PathVariable String emailUsuario,
+	public ResponseEntity<UsuarioDTO> inserirUsuarioEmailComApostas(@PathVariable String emailUsuario,
 			@PathVariable Integer quantidadeApostas) {
 		UsuarioDTO dto = service.insertViaEmailMuitasApostas(emailUsuario, quantidadeApostas);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();

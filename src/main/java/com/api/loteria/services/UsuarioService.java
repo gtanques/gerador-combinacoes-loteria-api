@@ -2,6 +2,7 @@ package com.api.loteria.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,19 @@ public class UsuarioService {
 
 	@Autowired
 	private ApostaRepository apostaRepository;
-	
+
 	@Autowired
 	private ApostaUtility apostaUtility;
 
 	@Transactional(readOnly = true)
-	public List<Usuario> findAll() {
+	public List<UsuarioDTO> findAll() {
 		return usuarioRepository.buscarUsuariosComApostas();
+	}
+
+	@Transactional(readOnly = true)
+	public UsuarioDTO findEmail(String email) {
+		Optional<UsuarioDTO> usuario = usuarioRepository.buscarApostasPorEmail(email);
+		return usuario.get();
 	}
 
 	@Transactional
@@ -46,7 +53,7 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public UsuarioDTO insertViaEmail(String email) {	
+	public UsuarioDTO insertViaEmail(String email) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail(email);
 		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
@@ -58,29 +65,28 @@ public class UsuarioService {
 
 		return new UsuarioDTO(usuario);
 	}
-	
+
 	@Transactional
-	public UsuarioDTO insertViaEmailMuitasApostas(String emailUsuario, Integer quantidadeApostas) {	
+	public UsuarioDTO insertViaEmailMuitasApostas(String emailUsuario, Integer quantidadeApostas) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail(emailUsuario);
 		List<Aposta> listaApostas = new ArrayList<Aposta>();
-		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());		
+		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
 		int contador = 0;
-		while((contador != quantidadeApostas) && contador < 10){
+		while ((contador != quantidadeApostas) && contador < 10) {
 			Aposta aposta = new Aposta(null, apostaUtility.gerarCombinacao());
 			listaApostas.add(aposta);
 			contador++;
 		}
-		
-		for(Aposta a : listaApostas) {
+
+		for (Aposta a : listaApostas) {
 			Aposta aposta = apostaRepository.save(a);
 			usuario.getApostas().add(aposta);
-		}												
+		}
 
 		usuario = usuarioRepository.save(usuario);
 
 		return new UsuarioDTO(usuario);
 	}
-
 
 }
