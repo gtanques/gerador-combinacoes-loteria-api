@@ -11,7 +11,7 @@ import com.api.loteria.entities.Aposta;
 import com.api.loteria.entities.Usuario;
 import com.api.loteria.repositories.ApostaRepository;
 import com.api.loteria.repositories.UsuarioRepository;
-import com.api.loteria.utilities.ApostaUtility;
+import com.api.loteria.services.utilities.ApostaUtility;
 
 @Configuration
 @Profile("test")
@@ -28,8 +28,7 @@ public class TestConfig implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		/*// Users
+		
 		Usuario u1 = new Usuario(null, "joao@gmail.com");
 		Usuario u2 = new Usuario(null, "maria@gmail.com");
 		Usuario u3 = new Usuario(null, "pedro@gmail.com");
@@ -51,7 +50,6 @@ public class TestConfig implements CommandLineRunner {
 		// Insert
 		usuarioRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5));
 		apostaRepository.saveAll(Arrays.asList(a1, a2, a3, a4, a5));
-*/
 	}
 
 }

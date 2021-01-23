@@ -14,7 +14,7 @@ import com.api.loteria.entities.Usuario;
 import com.api.loteria.repositories.ApostaRepository;
 import com.api.loteria.repositories.UsuarioRepository;
 import com.api.loteria.services.exceptions.RecursoNaoEncontradoException;
-import com.api.loteria.utilities.ApostaUtility;
+import com.api.loteria.services.utilities.ApostaUtility;
 
 @Service
 public class UsuarioService {

@@ -1,4 +1,4 @@
-package com.api.loteria.utilities;
+package com.api.loteria.services.utilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
