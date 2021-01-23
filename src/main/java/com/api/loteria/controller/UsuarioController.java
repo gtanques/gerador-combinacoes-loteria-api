@@ -36,19 +36,20 @@ public class UsuarioController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-	
-	@PostMapping(value="/{email}")
+
+	@PostMapping(value = "/{email}")
 	public ResponseEntity<UsuarioDTO> insert(@PathVariable String email) {
 		UsuarioDTO dto = service.insertViaEmail(email);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-			
-	@PostMapping(value="/{emailUsuario}/{quantidadeApostas}")
-	public ResponseEntity<UsuarioDTO> insertMuitasApostas(@PathVariable String emailUsuario, @PathVariable Integer quantidadeApostas) {
+
+	@PostMapping(value = "/{emailUsuario}/{quantidadeApostas}")
+	public ResponseEntity<UsuarioDTO> insertMuitasApostas(@PathVariable String emailUsuario,
+			@PathVariable Integer quantidadeApostas) {
 		UsuarioDTO dto = service.insertViaEmailMuitasApostas(emailUsuario, quantidadeApostas);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 		return ResponseEntity.created(uri).body(dto);
 	}
-	
+
 }
