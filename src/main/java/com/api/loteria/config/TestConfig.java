@@ -29,7 +29,7 @@ public class TestConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		// Users
+		/*// Users
 		Usuario u1 = new Usuario(null, "joao@gmail.com");
 		Usuario u2 = new Usuario(null, "maria@gmail.com");
 		Usuario u3 = new Usuario(null, "pedro@gmail.com");
@@ -51,7 +51,7 @@ public class TestConfig implements CommandLineRunner {
 		// Insert
 		usuarioRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5));
 		apostaRepository.saveAll(Arrays.asList(a1, a2, a3, a4, a5));
-
+*/
 	}
 
 }

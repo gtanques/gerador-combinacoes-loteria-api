@@ -1,4 +1,4 @@
-package com.api.loteria.exceptions;
+package com.api.loteria.services.exceptions;
 
 public class BancoException extends RuntimeException {
 

@@ -13,6 +13,7 @@ import com.api.loteria.entities.Aposta;
 import com.api.loteria.entities.Usuario;
 import com.api.loteria.repositories.ApostaRepository;
 import com.api.loteria.repositories.UsuarioRepository;
+import com.api.loteria.services.exceptions.RecursoNaoEncontradoException;
 import com.api.loteria.utilities.ApostaUtility;
 
 @Service
@@ -35,7 +36,7 @@ public class UsuarioService {
 	@Transactional(readOnly = true)
 	public UsuarioDTO findEmail(String email) {
 		Optional<UsuarioDTO> usuario = usuarioRepository.buscarApostasPorEmail(email);
-		return usuario.get();
+		return usuario.orElseThrow(() -> new RecursoNaoEncontradoException(email));
 	}
 
 	@Transactional
