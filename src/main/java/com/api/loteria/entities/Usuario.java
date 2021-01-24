@@ -27,14 +27,12 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Valid
+		
 	@Email
 	private String email;
 
 	@OneToMany(targetEntity = Aposta.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_usuario_fk", referencedColumnName = "id")
-	@NotNull
+	@JoinColumn(name = "id_usuario_fk", referencedColumnName = "id")	
 	private List<Aposta> apostas = new ArrayList<>();
 
 	public Usuario() {

@@ -58,7 +58,7 @@ public class UsuarioService {
 	public UsuarioDTO insertViaEmailMuitasApostas(String emailUsuario, Integer quantidadeApostas) {
 		
 		if ((quantidadeApostas > 10) || quantidadeApostas < 1) {
-			throw new ExceptionPersonalizada("Quantidade de apostas inválida. No mínimo uma e máximo dez combinações por apostador");
+			throw new ExceptionPersonalizada("Quantidade de apostas inválida. o número de apostas deve ser de 1 a 10 por usuario");
 		}
 		
 		int contador = 0;
