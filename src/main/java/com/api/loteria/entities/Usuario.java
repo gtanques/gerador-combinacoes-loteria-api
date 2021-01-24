@@ -12,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+
+
 
 @Entity
 @Table(name = "tb_usuario")
@@ -22,10 +27,14 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@Valid
+	@Email
 	private String email;
 
 	@OneToMany(targetEntity = Aposta.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario_fk", referencedColumnName = "id")
+	@NotNull
 	private List<Aposta> apostas = new ArrayList<>();
 
 	public Usuario() {

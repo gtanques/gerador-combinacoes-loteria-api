@@ -13,6 +13,7 @@ import com.api.loteria.entities.Aposta;
 import com.api.loteria.entities.Usuario;
 import com.api.loteria.repositories.ApostaRepository;
 import com.api.loteria.repositories.UsuarioRepository;
+import com.api.loteria.services.exceptions.ExceptionPersonalizada;
 import com.api.loteria.services.exceptions.RecursoNaoEncontradoException;
 import com.api.loteria.services.utilities.ApostaUtility;
 
@@ -38,21 +39,7 @@ public class UsuarioService {
 		Optional<UsuarioDTO> usuario = usuarioRepository.buscarApostasPorEmail(email);
 		return usuario.orElseThrow(() -> new RecursoNaoEncontradoException(email));
 	}
-
-	@Transactional
-	public UsuarioDTO insertUsuarioAposta(UsuarioDTO usuarioDTO) {
-		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
-
-		for (Aposta a : usuarioDTO.getApostas()) {
-			Aposta aposta = apostaRepository.save(a);
-			usuario.getApostas().add(aposta);
-		}
-
-		usuario = usuarioRepository.save(usuario);
-
-		return new UsuarioDTO(usuario);
-	}
-
+	
 	@Transactional
 	public UsuarioDTO insertViaEmail(String email) {
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -69,12 +56,20 @@ public class UsuarioService {
 
 	@Transactional
 	public UsuarioDTO insertViaEmailMuitasApostas(String emailUsuario, Integer quantidadeApostas) {
+		
+		if ((quantidadeApostas > 10) || quantidadeApostas < 1) {
+			throw new ExceptionPersonalizada("Quantidade de apostas inválida. No mínimo uma e máximo dez combinações por apostador");
+		}
+		
+		int contador = 0;
+		
 		UsuarioDTO usuarioDTO = new UsuarioDTO();
 		usuarioDTO.setEmail(emailUsuario);
+		
 		List<Aposta> listaApostas = new ArrayList<Aposta>();
 		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
-		int contador = 0;
-		while ((contador != quantidadeApostas) && contador < 10) {
+				
+		while ((contador != quantidadeApostas) && contador < 10) { 
 			Aposta aposta = new Aposta(null, apostaUtility.gerarCombinacao());
 			listaApostas.add(aposta);
 			contador++;
