@@ -35,20 +35,32 @@ public class UsuarioService {
 	}
 
 	@Transactional(readOnly = true)
-	public UsuarioDTO findEmail(String email) {
-		Optional<UsuarioDTO> usuario = usuarioRepository.buscarApostasPorEmail(email);
-		return usuario.orElseThrow(() -> new RecursoNaoEncontradoException(email));
+	public UsuarioDTO buscarPorEmail(String emailUsuario) {
+		Optional<UsuarioDTO> usuario = usuarioRepository.buscarApostasPorEmail(emailUsuario);
+		return usuario.orElseThrow(() -> new RecursoNaoEncontradoException(emailUsuario));
 	}
 	
+	private Boolean emailCadastrado(String emailUsuario) {		 
+		Optional<UsuarioDTO> emailExistente = usuarioRepository.buscarApostasPorEmail(emailUsuario);
+		
+		if(emailExistente.isEmpty()) {
+			return false;
+		}
+		
+		return true;
+	} 
+	
 	@Transactional
-	public UsuarioDTO insertViaEmail(String email) {
-		UsuarioDTO usuarioDTO = new UsuarioDTO();
-		usuarioDTO.setEmail(email);
-		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
+	public UsuarioDTO insertViaEmail(String emailUsuario) {		
+		if(emailCadastrado(emailUsuario)) {
+			throw new ExceptionPersonalizada("E-mail já cadastrado.");
+		}
+						
 		Aposta aposta = new Aposta(null, apostaUtility.gerarCombinacao());
 		aposta = apostaRepository.save(aposta);
+		
+		Usuario usuario = new Usuario(null, emailUsuario);
 		usuario.getApostas().add(aposta);
-
 		usuario = usuarioRepository.save(usuario);
 
 		return new UsuarioDTO(usuario);
@@ -56,18 +68,17 @@ public class UsuarioService {
 
 	@Transactional
 	public UsuarioDTO insertViaEmailMuitasApostas(String emailUsuario, Integer quantidadeApostas) {
+		if(emailCadastrado(emailUsuario)) {
+			throw new ExceptionPersonalizada("E-mail já cadastrado");
+		}
 		
 		if ((quantidadeApostas > 10) || quantidadeApostas < 1) {
 			throw new ExceptionPersonalizada("Quantidade de apostas inválida. o número de apostas deve ser de 1 a 10 por usuario");
 		}
 		
-		int contador = 0;
-		
-		UsuarioDTO usuarioDTO = new UsuarioDTO();
-		usuarioDTO.setEmail(emailUsuario);
-		
+		int contador = 0;			
 		List<Aposta> listaApostas = new ArrayList<Aposta>();
-		Usuario usuario = new Usuario(null, usuarioDTO.getEmail());
+		Usuario usuario = new Usuario(null, emailUsuario);
 				
 		while ((contador != quantidadeApostas) && contador < 10) { 
 			Aposta aposta = new Aposta(null, apostaUtility.gerarCombinacao());

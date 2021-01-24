@@ -27,12 +27,11 @@ public class ExcecaoController {
 		return ResponseEntity.status(status).body(erroPadrao);
 
 	}
-	
+
 	@ExceptionHandler(ExceptionPersonalizada.class)
-	public ResponseEntity<ErroPadrao> recursoInvalido(ExceptionPersonalizada e,
-			HttpServletRequest requisicao) {
+	public ResponseEntity<ErroPadrao> recursoInvalido(ExceptionPersonalizada e, HttpServletRequest requisicao) {
 		String error = "Recurso inválido";
-		HttpStatus status = HttpStatus.FORBIDDEN; 
+		HttpStatus status = HttpStatus.FORBIDDEN;
 
 		ErroPadrao erroPadrao = new ErroPadrao(Instant.now(), status.value(), e.getMessage(), error,
 				requisicao.getRequestURI());

@@ -29,8 +29,8 @@ public class UsuarioController {
 	}
 
 	@GetMapping(value = "/{email}")
-	public ResponseEntity<UsuarioDTO> findEmail(@PathVariable String email) {
-		UsuarioDTO usuario = service.findEmail(email);
+	public ResponseEntity<UsuarioDTO> buscarPorViaEmail(@PathVariable String email) {
+		UsuarioDTO usuario = service.buscarPorEmail(email);
 		return ResponseEntity.ok().body(usuario);
 	}
 
