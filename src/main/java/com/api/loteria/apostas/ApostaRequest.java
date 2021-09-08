@@ -26,7 +26,7 @@ public class ApostaRequest {
         return new Aposta(gerarCombinacao(), usuario);
     }
 
-    private String gerarCombinacao() {
+    protected String gerarCombinacao() {
         List<Integer> listaCombinacao = new ArrayList<>();
         Random random = new Random();
         int contador = 0;
@@ -49,10 +49,6 @@ public class ApostaRequest {
         return combinacao;
     }
 
-    private String formatarCombinacao(String combinacao) {
-        return combinacao.replaceAll(", ", "-").replaceAll("[\\[\\]]", "");
-    }
-
     private String AdicionarZeroEsquerda(String combinacao) {
         String[] arrayCombinacao = combinacao.split("-");
         List<String> listaCombinacaoFormatada = Arrays.stream(arrayCombinacao)
@@ -61,4 +57,9 @@ public class ApostaRequest {
 
         return formatarCombinacao(listaCombinacaoFormatada.toString());
     }
+
+    private String formatarCombinacao(String combinacao) {
+        return combinacao.replaceAll(", ", "-").replaceAll("[\\[\\]]", "");
+    }
+
 }
