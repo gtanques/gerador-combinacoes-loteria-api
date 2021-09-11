@@ -23,17 +23,4 @@ class ApostaRequestTest {
         assertTrue(combinacao.matches(regexCombinacao));
     }
 
-    @Test
-    public void deveConsiderarCombinacoesFalsas() {
-        var combinacao1 = "01-02-03-05-51-61";
-        var combinacao2 = "1-60-03-05-51-71";
-        var combinacao3 = "02-03-05-51-55";
-        var combinacao4 = "0-1-2-3-25";
-
-        assertFalse(combinacao1.matches(regexCombinacao));
-        assertFalse(combinacao2.matches(regexCombinacao));
-        assertFalse(combinacao3.matches(regexCombinacao));
-        assertFalse(combinacao4.matches(regexCombinacao));
-    }
-
 }
