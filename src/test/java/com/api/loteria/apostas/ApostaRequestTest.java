@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ApostaRequestTest {
 
     private ApostaRequest apostaRequest;
-    private final String regexCombinacao = "^[0-5][0-9]-[0-5][0-9]-[0-5][0-9]-[0-5][0-9]-[0-5][0-9]-([0-5]?[0-9]|60)$";
 
     @BeforeEach
     void setUp() {
@@ -20,6 +19,7 @@ class ApostaRequestTest {
         var combinacao = apostaRequest.gerarCombinacao();
         System.out.println(combinacao.length());
         assertEquals(17, combinacao.length());
+        String regexCombinacao = "^[0-5][0-9]-[0-5][0-9]-[0-5][0-9]-[0-5][0-9]-[0-5][0-9]-([0-5]?[0-9]|60)$";
         assertTrue(combinacao.matches(regexCombinacao));
     }
 
